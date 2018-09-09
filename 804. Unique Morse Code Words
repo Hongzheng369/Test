@@ -1,0 +1,8 @@
+String [] diff =  {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+HashSet<String> Str = new HashSet<>();
+for(String word: words){
+  String code = "";
+  for(char c : word.toCharArray()) code+= d[c-'a'];  //需要放在一行
+  s.add(code);
+  
+}
