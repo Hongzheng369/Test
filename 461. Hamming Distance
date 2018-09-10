@@ -1,0 +1,5 @@
+int xor = x^y;
+for (int i=0;i<32;i++){
+count + = (xor>>i) & 1;
+}
+return count;
