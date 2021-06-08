@@ -89,3 +89,102 @@ public class Homework4 {
 	}
 
 }
+
+
+import java.util.*;
+
+public class WordLadder {
+    public List<String> ladderLength(String begin, String end, List<String> wordList) {
+        Set<String> set = new HashSet<>();
+        set.addAll(wordList);
+        List<String> res = new ArrayList<>();
+        if(!set.contains(end))  return res;
+        Queue<String> q = new ArrayDeque<>();
+        q.add(begin);
+//        int level = 1;
+
+        while(!q.isEmpty()) {
+            int size = q.size();
+            for(int i = 0; i < size; i++) {
+                String cur = q.poll();
+                for(int j = 0; j < cur.length(); j++) {
+                    char[] ch = cur.toCharArray();
+                    for(char c = 'a'; c <= 'b'; c++) {
+                        ch[j] = c;
+                        String temp = new String(ch);
+                        if(temp.equals(end)) {
+                            res.add(end);
+                            return res;
+                        }
+                        else if(set.contains(temp) && !temp.equals(cur)) {
+                            q.add(temp);
+                            set.remove(temp);
+                            res.add(temp);
+                        }
+                    }
+//                    break;
+                }
+            }
+//            level++;
+        }
+        return res;
+    }
+
+    public List<String> ladderLength2(String begin, String end, List<String> wordList) {
+        Set<String> set = new HashSet<>();
+        set.addAll(wordList);
+        List<String> res = new ArrayList<>();
+        if(!set.contains(end))  return res;
+        Queue<String> q = new ArrayDeque<>();
+        q.add(begin);
+        int level = 1;
+        Map<String, String> map = new HashMap<>();
+
+        while(!q.isEmpty()) {
+            int size = q.size();
+            for(int i = 0; i < size; i++) {
+                String cur = q.poll();
+                for(int j = 0; j < cur.length(); j++) {
+                    char[] ch = cur.toCharArray();
+                    for(char c = 'a'; c <= 'b'; c++) {
+                        ch[j] = c;
+                        String temp = new String(ch);
+                        if(temp.equals(end)) {
+                            res.add(end);
+                            map.put(temp, cur);
+                            findPath(res, end, map, level, begin);
+                            return res;
+                        }
+                        else if(set.contains(temp) && !temp.equals(cur)) {
+                            q.add(temp);
+                            set.remove(temp);
+                            map.put(temp, cur);
+                        }
+                    }
+//                    break;
+                }
+            }
+            level++;
+        }
+        return res;
+    }
+
+    private void findPath(List<String> res, String s, Map<String, String> map, int level, String start) {
+        while(!s.equals(start)) {
+            s = map.get(s);
+            res.add(s);
+            System.out.println("String:" + res);
+        }
+    }
+
+
+    public static void main(String[] args) {
+        WordLadder word = new WordLadder();
+        List<String> res = new ArrayList<>();
+        String begin = "aaaaaa", end = "abbbba";
+        List<String> wordList = Arrays.asList("aaaaba","aaaabb","abaaaa","abbaaa","abbbaa", "abbbba");
+        res = word.ladderLength2(begin, end, wordList);
+        System.out.println("RES:" + res);
+    }
+}
+
